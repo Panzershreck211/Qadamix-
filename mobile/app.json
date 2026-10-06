@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "QADAMIX Водитель",
+    "slug": "qadamix-driver",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "kz.qadamix.driver"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#2F6FD6",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "kz.qadamix.driver"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "QADAMIX передаёт местоположение машины заказчику во время рейса, чтобы не звонить вам с вопросом «где груз».",
+          "locationAlwaysAndWhenInUsePermission": "Чтобы заказчик видел машину на карте, когда приложение свёрнуто (например, открыт навигатор). Передача идёт только во время активного рейса.",
+          "locationAlwaysPermission": "Чтобы заказчик видел машину на карте, когда приложение свёрнуто. Передача идёт только во время активного рейса.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
+        }
+      ],
+      "expo-font"
+    ],
+    "scheme": "qadamix"
+  }
+}

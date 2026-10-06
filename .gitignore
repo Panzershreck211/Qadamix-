@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+server/.pgdata/
+mobile/.expo/
+mobile/dist/
+web-build/
+*.log

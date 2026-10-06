@@ -1,0 +1,27 @@
+{
+  "name": "qadamix-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "QADAMIX API: грузы, водители, отклики, рейсы, аналитика и AI-ассистент",
+  "scripts": {
+    "dev": "node --watch --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/index.js",
+    "start": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/index.js",
+    "seed": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/seed.js --reset",
+    "db:local": "node scripts/local-db.js",
+    "migrate": "node --env-file-if-exists=.env -e \"import('./src/db.js').then(async m=>{await m.migrate(); await m.pool.end()})\""
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "pg": "^8.23.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "embedded-postgres": "^18.4.0-beta.17"
+  }
+}

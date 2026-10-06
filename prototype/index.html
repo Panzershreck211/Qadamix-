@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QADAMIX</title>
+  <meta name="description" content="QADAMIX — AI-платформа для логистов: грузы, перевозчики, документы, отслеживание и аналитика." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page gradient-hero">
+    <header class="glass header">
+      <div class="container header-inner">
+        <a href="#" class="logo" aria-label="QADAMIX">
+          <span class="logo-mark gradient-brand">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 17.5 9.5 12 4 6.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12.5 18h7" stroke="white" stroke-width="2.2" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="logo-text">QADAMIX</span>
+        </a>
+        <div class="header-actions">
+          <span class="badge badge-secondary">Тариф FREE</span>
+          <span class="muted hide-sm">Демо-логист</span>
+          <button class="btn btn-primary btn-sm" data-action="open-dispatcher" type="button">
+            <span data-icon="bot"></span> AI-диспетчер
+          </button>
+          <a href="#" class="btn btn-outline btn-sm">На сайт</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container main">
+      <h1 class="title">Кабинет логиста</h1>
+      <p class="muted subtitle">Демо-режим MVP: данные тестовые, внешние интеграции не подключены.</p>
+
+      <nav class="tabs" role="tablist" aria-label="Разделы кабинета">
+        <button role="tab" data-tab="home"><span data-icon="dashboard"></span>Главная</button>
+        <button role="tab" data-tab="cargo"><span data-icon="package"></span>Грузы</button>
+        <button role="tab" data-tab="carriers"><span data-icon="users"></span>Перевозчики</button>
+        <button role="tab" data-tab="docs"><span data-icon="file"></span>Документы</button>
+        <button role="tab" data-tab="tracking"><span data-icon="pin"></span>Отслеживание</button>
+        <button role="tab" data-tab="analytics"><span data-icon="chart"></span>Аналитика</button>
+        <button role="tab" data-tab="notifications"><span data-icon="bell"></span>Уведомления<span class="tab-dot" id="notif-dot" hidden></span></button>
+      </nav>
+
+      <section id="panel" class="panel" role="tabpanel"></section>
+    </main>
+  </div>
+
+  <div id="dialog-root"></div>
+  <div id="toaster" class="toaster" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+# QADAMIX целиком в Docker:  docker compose up -d --build
+#   Кабинет логиста      http://localhost:8080
+#   Приложение водителя  http://localhost:8081  (веб-версия; на телефон — Expo Go)
+#   API                  http://localhost:4000/api
+x-db-url: &db-url postgres://qadamix:qadamix_dev_password@postgres:5432/qadamix
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: qadamix-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: qadamix
+      POSTGRES_USER: qadamix
+      POSTGRES_PASSWORD: qadamix_dev_password
+      TZ: Asia/Almaty
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qadamix -d qadamix"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  # Разовый запуск: применяет миграции и заполняет демо-данными, если база пустая
+  seed:
+    build: ./server
+    command: ["node", "src/seed.js"]
+    environment:
+      DATABASE_URL: *db-url
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build: ./server
+    container_name: qadamix-api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: *db-url
+      PORT: 4000
+      JWT_SECRET: ${JWT_SECRET:-qadamix-docker-dev-secret}
+      DEV_SHOW_OTP: "true" # SMS не подключены: код входа показывается на экране
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-} # пусто — ассистент в режиме правил
+      TZ: Asia/Almaty
+    ports:
+      - "4000:4000"
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4000/api/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  web:
+    build: ./web
+    container_name: qadamix-web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  driver-app:
+    build: ./mobile
+    container_name: qadamix-driver-app
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
